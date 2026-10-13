@@ -12,4 +12,9 @@ add_executable(HUITA
         Contracts.cpp
         Contracts.h
         GameData.cpp
-        GameData.h)
+        GameData.h
+        Part.cpp
+        Part.h
+        Engine.cpp
+        Engine.h
+)
