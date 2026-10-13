@@ -14,7 +14,7 @@ protected:
 public:
     Part();
     Part(int id, std::string name, double mass, double cost);
-    virtual int readInput();
+    virtual double readInput();
     virtual void showInfo() = 0;
     virtual void calculateParameters() = 0;
     virtual void createPart() = 0;
