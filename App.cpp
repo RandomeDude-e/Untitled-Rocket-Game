@@ -88,6 +88,30 @@ void App::handleContracts() {
 }
 
 void App::handleRANDD() {
+    std::cout << "---Разработка и Проектирования---\n";
+    std::cout << "[1] - Разработать двигатель\n";
+    std::cout << "[2] - Разработать полезную нагрузку\n";
+    std::cout << "[3] - Склад \n";
+    std::cout << "[4] - Выйти и центра Разработки и Проектирования\n";
+
+    int choice = readInput();
+    switch (choice) {
+        case 1:
+            game_data.addEngineToWarehouse();
+            break;
+        case 2:
+            game_data.addPayloadToWarehouse();
+            break;
+        case 3:
+            game_data.showWarehouse();
+            break;
+        case 4:
+            current_state = App_State::MAINMENU;
+            break;
+        default:
+            break;
+
+    }
 
 }
 

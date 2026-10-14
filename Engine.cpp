@@ -3,23 +3,24 @@
 #include <cmath>
 
 Engine::Engine():
-    Part(next_id++, "", 0, 0), thrust(0), fuel_mass(0), dry_mass(0), density(0), fuel_volume(0), length(0), thickness(0), diameter(0), inner_diameter(0), mass_flow(0), specific_impulse(0), exhaust_velocity(0),
+    Part(next_id++, "", 0, 0,0,0), thrust(0), fuel_mass(0), dry_mass(0), density(0), fuel_volume(0), thickness(0),  inner_diameter(0), mass_flow(0), specific_impulse(0), exhaust_velocity(0),
     Dt(0), De(0), At(0),Ae(0),expansion_ratio(0), p1(0), p2(0), p3(0), time(0), burn_rate(0), burn_area(0), fuel_type(" "),
     gamma(0), molar_mass(0), T(0), n(0), characteristic_velocity(0){}
 
-Engine::Engine(double thrust, double fuel_mass, double dry_mass, double density, double fuel_volume, double length, double thickness, double diameter,
+Engine::Engine(std::string name, double mass, double length, double diameter, double cost, double thrust, double fuel_mass, double dry_mass, double density, double fuel_volume, double thickness,
         double inner_diameter,double mass_flow, double specific_impulse,
         double exhaust_velocity, double Dt, double De,double At, double Ae, double expansion_ratio, double p1, double p2,double p3, double time, double burn_rate, double burn_area, std::string fuel_type,
         double gamma, double molar_mass, double T, double n, double characteristic_velocity):
-    Part(next_id++, std::move(name), mass, cost),
-    thrust(thrust), fuel_mass(fuel_mass), dry_mass(dry_mass), density(density), fuel_volume(fuel_volume), length(length),
-    thickness(thickness), diameter(diameter), inner_diameter(inner_diameter), mass_flow(mass_flow), specific_impulse(specific_impulse),
+    Part(next_id++, std::move(name), mass, length, diameter, cost),
+    thrust(thrust), fuel_mass(fuel_mass), dry_mass(dry_mass), density(density), fuel_volume(fuel_volume),
+    thickness(thickness), inner_diameter(inner_diameter), mass_flow(mass_flow), specific_impulse(specific_impulse),
     exhaust_velocity(exhaust_velocity), Dt(Dt), De(De), At(At), Ae(Ae),expansion_ratio(expansion_ratio),
     p1(p1), p2(p2), p3(p3), time(time), burn_rate(burn_rate),burn_area(burn_area), fuel_type {std::move(fuel_type)},
     gamma(gamma), molar_mass(molar_mass), T(T), n(n), characteristic_velocity(characteristic_velocity){}
 
 void Engine::showInfo() {
     std::cout<<"Двигатель "<<"\"" + name + "\""<<" ID: "<<id<<"\n";
+    std::cout<<"Масса полная: "<<mass<<"кг\n";
     std::cout<<"Тяга: "<<thrust<<"N\n";
     std::cout<<"Время работы: "<<time<<" с\n";
     std::cout<<"Удельный импульс: "<<specific_impulse<< " с\n";
@@ -27,18 +28,19 @@ void Engine::showInfo() {
     std::cout<<"Масса сухая: "<<dry_mass<< "кг\n";
     std::cout<<"Масса топлива : "<<fuel_mass<< "кг\n";
     std::cout<<"Давление в камере згорания: "<<p1<<"Па\n";
+    std::cout<<"Цена: "<<cost<<"$\n";
 }
 
 void Engine::calculateParameters() {
-    fuel_volume = (3.14 / 4.0) * (diameter * diameter - inner_diameter * inner_diameter) * length;
+    fuel_volume = (PI / 4.0) * (diameter * diameter - inner_diameter * inner_diameter) * length;
     fuel_mass = density * fuel_volume;
-    double shell_surface = 3.14 * diameter * length;
+    double shell_surface = PI * diameter * length;
     dry_mass = shell_surface * thickness * 2770.0;
     mass = dry_mass + fuel_mass;
-    Ae = (3.14 / 4.0) * (De * De);
-    At = (3.14 / 4.0) * (Dt * Dt);
+    Ae = (PI / 4.0) * (De * De);
+    At = (PI / 4.0) * (Dt * Dt);
     expansion_ratio = Ae / At;
-    burn_area = 3.14 * inner_diameter * length;
+    burn_area = PI * inner_diameter * length;
 
     double gamma_term = (gamma + 1.0) / (2.0 * (gamma - 1.0));
     double Gamma_complex = std::sqrt(gamma) * std::pow(2.0 / (gamma + 1.0), gamma_term);
@@ -74,7 +76,7 @@ void Engine::calculateParameters() {
 void Engine::createPart() {
     std::cout<<"\n---Проектирование двигателя---\n";
     std::cout<<"Введите название двигателя: \n";
-    std::getline(std::cin,name);
+    std::getline(std::cin >> std::ws, name);
 
     std::cout<<"Введите длину (м): \n";
     length = readInput();
@@ -101,7 +103,7 @@ void Engine::createPart() {
             density = 1650;
             burn_rate = 0.012;
             T = 1800.0;
-            molar_mass = 32.0;
+            molar_mass = 0.032;
             gamma = 1.25;
             n = 0.5;
             break;
@@ -110,7 +112,7 @@ void Engine::createPart() {
             density = 1780;
             burn_rate = 0.006;
             T = 1700.0;
-            molar_mass = 26.5;
+            molar_mass = 0.0265;
             gamma = 1.135;
             n = 0.3;
             break;
@@ -119,7 +121,7 @@ void Engine::createPart() {
             density = 1770;
             burn_rate = 0.008;
             T = 2800.0;
-            molar_mass = 24.0;
+            molar_mass = 0.024;
             gamma = 1.22;
             n = 0.35;
             break;
@@ -141,6 +143,33 @@ void Engine::createPart() {
 
     calculateParameters();
 
+}
+
+double Engine::calculateCost() {
+    double dry_mass_cost = dry_mass * 80;
+    double fuel_per_kg_cost = 85;
+
+    if (fuel_type == "Дымный порох") fuel_per_kg_cost = 25;
+    if (fuel_type == "Сорбитова карамель") fuel_per_kg_cost =50;
+    if (fuel_type == "Перхлоратно-алюминиевое горючее") fuel_per_kg_cost = 100;
+
+    double fuel_cost = fuel_per_kg_cost * fuel_mass;
+
+    cost = dry_mass_cost + fuel_cost;
+    return cost;
+
+}
+
+double Engine::calculateProductionDays() {
+    double fuel_coef = 8.5;
+
+    if (fuel_type == "Дымный порох") fuel_coef = 1.0;
+    if (fuel_type == "Сорбитова карамель") fuel_coef = 1.5;
+    if (fuel_type == "Перхлоратно-алюминиевое горючее") fuel_coef = 2;
+
+    double production_days = 1 + (dry_mass / 10.0) * fuel_coef;
+
+    return production_days;
 }
 
 int Engine::next_id = 1;

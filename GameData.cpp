@@ -1,7 +1,8 @@
 #include "GameData.h"
 
+
 GameData::GameData():
-    money(2500), player_rep(0) {
+    money(7500), player_rep(0), current_day(1){
         init_contracts();
 }
 
@@ -89,4 +90,70 @@ void GameData::print_active_contracts() const{
         std::cout<<"Дедлайн: "<<contract.getDeadline()<<" дней\n";
     }
     std::cout<<"\n=================================================================\n";
+}
+
+void GameData::addEngineToWarehouse() {
+    auto new_engine = std::make_unique<Engine>();
+    new_engine->createPart();
+    double engine_cost = new_engine->calculateCost();
+
+    std::cout << "Стоимость создания: " << engine_cost << "$\n";
+    new_engine->showInfo();
+    std::cout << "[1] - Создать\n";
+    std::cout << "[2] - Уничтожить\n";
+
+    int choice;
+    std::cin >> choice;
+
+    if (choice == 1) {
+        if (money >= engine_cost) {
+            money -= engine_cost;
+            current_day += new_engine->calculateProductionDays();
+            parts.push_back(std::move(new_engine));
+            std::cout << "Двигатель успешно добавлен на склад!\n";
+        } else {
+            std::cout << "Недостаточно средств\n";
+        }
+    } else if (choice == 2) {
+        std::cout << "Двигатель уничтожен\n";
+    } else {
+        std::cout << "Неверный выбор\n";
+    }
+}
+
+void GameData::addPayloadToWarehouse() {
+    auto new_payload = std::make_unique<Payload>();
+    new_payload->createPart();
+    double payload_cost = new_payload->calculateCost();
+
+    std::cout << "Стоимость создания: " << payload_cost << "$\n";
+    new_payload->showInfo();
+    std::cout << "[1] - Создать\n";
+    std::cout << "[2] - Уничтожить\n";
+
+    int choice;
+    std::cin >> choice;
+
+    if (choice == 1) {
+        if (money >= payload_cost) {
+            money -= payload_cost;
+            current_day += new_payload->calculateProductionDays();
+            parts.push_back(std::move(new_payload));
+            std::cout << "Деталь успешно добавлена на склад!\n";
+        } else {
+            std::cout << "Недостаточно средств\n";
+        }
+    } else if (choice == 2) {
+        std::cout << "Полезная нагрузка уничтожена\n";
+    } else {
+        std::cout << "Неверный выбор\n";
+    }
+}
+
+void GameData::showWarehouse() const{
+    std::cout<<"\n---Склад Деталей---\n";
+    if (parts.empty()) std::cout<<"Склад пуст\n";
+    for (const auto& part : parts) {
+        part->showInfo();
+    }
 }

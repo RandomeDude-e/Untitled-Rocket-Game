@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include "GameData.h"
+#include "Part.h"
+#include "Engine.h"
+#include "Payload.h"
 
 enum class App_State {
     MAINMENU,

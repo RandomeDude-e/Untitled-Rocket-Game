@@ -17,4 +17,6 @@ add_executable(HUITA
         Part.h
         Engine.cpp
         Engine.h
+        Payload.cpp
+        Payload.h
 )

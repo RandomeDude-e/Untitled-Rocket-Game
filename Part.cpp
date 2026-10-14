@@ -1,11 +1,11 @@
 #include "Part.h"
 
 Part::Part():
-    id(0), name(" "), mass(0), cost(0)
+    id(0), name(" "), mass(0),length(0), diameter(0), cost(0)
 {}
 
-Part::Part(int id, std::string name, double mass, double cost) :
-    id(id), name{std::move(name)}, mass(mass), cost(cost){}
+Part::Part(int id, std::string name, double mass, double length, double diameter, double cost) :
+    id(id), name{std::move(name)}, mass(mass),length(length), diameter(diameter), cost(cost){}
 
 double Part::readInput() {
         double value;

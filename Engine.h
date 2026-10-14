@@ -5,7 +5,8 @@
 class Engine : public Part {
 private:
     const double P_ATM = 101325.0;
-    const double R_UNIV = 8314.46;
+    const double R_UNIV = 8.314462618;
+    const double PI = 3.14159265358979323846;
 
     static int next_id;
     double thrust;
@@ -13,9 +14,7 @@ private:
     double dry_mass;
     double density;
     double fuel_volume;
-    double length;
     double thickness;
-    double diameter;
     double inner_diameter; //BATES
     double mass_flow;
     double specific_impulse;
@@ -40,13 +39,15 @@ private:
     double characteristic_velocity; // exhaust velocity but without geometry
 public:
     Engine();
-    Engine(double thrust, double fuel_mass, double dry_mass,double density, double fuel_volume, double length, double thickness, double diameter,
+    Engine(std::string name, double mass, double length, double diameter, double cost,double thrust, double fuel_mass, double dry_mass,double density, double fuel_volume, double thickness,
         double inner_diameter,double mass_flow, double specific_impulse,
         double exhaust_velocity, double Dt, double De,double At, double Ae, double expansion_ratio, double p1, double p2,double p3, double time, double burn_rate, double burn_area, std::string fuel_type,
         double gamma, double molar_mass, double T, double n, double characteristic_velocity);
 
     void showInfo() override ;
-    void calculateParameters() override ;
+    void calculateParameters();
     void createPart() override ;
+    double calculateCost() override;
+    double calculateProductionDays() override;
 
 };
