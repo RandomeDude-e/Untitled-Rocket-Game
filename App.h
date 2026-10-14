@@ -24,9 +24,7 @@ private:
     void handleMainMenu();
     void handleContracts();
     void handleRANDD();
-    void handleAssembly();
-    void handlePoligon();
-    void handleExit();
+
 
 public:
 

@@ -115,17 +115,7 @@ void App::handleRANDD() {
 
 }
 
-void App::handleAssembly() {
 
-}
-
-void App::handlePoligon() {
-
-}
-
-void App::handleExit() {
-
-}
 
 
 void App::run() {
@@ -134,8 +124,6 @@ void App::run() {
             case App_State::MAINMENU: handleMainMenu(); break;
             case App_State::CONTRACTS: handleContracts(); break;
             case App_State::RANDD: handleRANDD(); break;
-            case App_State::ASSEMBLY: handleAssembly(); break;
-            case App_State::POLIGON: handlePoligon(); break;
             default: break;
         }
 
