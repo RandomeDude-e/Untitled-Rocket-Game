@@ -41,27 +41,27 @@ public:
     double reputation, double penalty, double deadline_days, double rep_success, double rep_failure, bool isActive, bool isCompleted, bool isFailed);
 
 
-    bool checkCompletion(double max_velocity_mps, double max_altitude_km, double max_payload_mass_kg) const;
+    [[nodiscard]] bool checkCompletion(double max_velocity_mps, double max_altitude_km, double max_payload_mass_kg) const;
     static Contracts  generateContract(double reputation);
 
-    int getId() const;
-    ContractType getContractType() const;
-    std::string getTitle() const;
-    std::string getDescription() const;
+    [[nodiscard]] int getId() const;
+    [[nodiscard]] ContractType getContractType() const;
+    [[nodiscard]] std::string getTitle() const;
+    [[nodiscard]] std::string getDescription() const;
 
-    double get_target_velocity_mps() const;
-    double get_target_altitude_km() const;
-    double get_target_payload_mass_kg() const;
+    [[nodiscard]] double get_target_velocity_mps() const;
+    [[nodiscard]] double get_target_altitude_km() const;
+    [[nodiscard]] double get_target_payload_mass_kg() const;
 
 
-    double getAdvance() const;
-    double getPayment() const;
-    double getFinalPayment() const;
-    double getPenalty() const;
-    double getReputation() const;
-    double getDeadline() const;
-    double getRepSuccess() const;
-    double getRepFailure() const;
+    [[nodiscard]] double getAdvance() const;
+    [[nodiscard]] double getPayment() const;
+    [[nodiscard]] double getFinalPayment() const;
+    [[nodiscard]] double getPenalty() const;
+    [[nodiscard]] double getReputation() const;
+    [[nodiscard]] double getDeadline() const;
+    [[nodiscard]] double getRepSuccess() const;
+    [[nodiscard]] double getRepFailure() const;
     void setIsActive(bool state);
     void setIsFailed(bool state);
 
