@@ -176,4 +176,20 @@ int Engine::getId() {
     return id;
 }
 
+double Engine::getMass() const{
+    return mass;
+}
+
+double Engine::getThrust() const{
+    return thrust;
+}
+
+double Engine::getBurnTime() const{
+    return time;
+}
+
+double Engine::getDiameter() const {
+    return diameter;
+}
+
 int Engine::next_id = 1;

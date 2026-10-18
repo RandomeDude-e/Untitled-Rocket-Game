@@ -21,6 +21,8 @@
     Payload.h
             Assembly.cpp
             Assembly.h
+            Rocket.cpp
+            Rocket.h
     )
 
     if(MINGW)

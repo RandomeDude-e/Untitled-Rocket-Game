@@ -14,4 +14,6 @@ public:
     double calculateCost() override;
     double calculateProductionDays() override;
     int getId() override;
+    [[nodiscard]] double getMass() const;
+    [[nodiscard]] double getDiameter() const;
 };

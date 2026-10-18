@@ -42,4 +42,11 @@ int Payload::getId() {
     return id;
 }
 
+double Payload::getMass() const {
+    return payload_mass;
+}
+
+double Payload::getDiameter() const {
+    return diameter;
+}
 int Payload::next_id = 1;
