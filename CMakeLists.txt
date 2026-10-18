@@ -19,7 +19,9 @@
     Engine.h
     Payload.cpp
     Payload.h
-)
+            Assembly.cpp
+            Assembly.h
+    )
 
     if(MINGW)
     target_link_options(HUITA PRIVATE

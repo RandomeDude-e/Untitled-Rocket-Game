@@ -13,4 +13,5 @@ public:
     void createPart() override;
     double calculateCost() override;
     double calculateProductionDays() override;
+    int getId() override;
 };

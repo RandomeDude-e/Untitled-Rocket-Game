@@ -38,4 +38,8 @@ double Payload::calculateProductionDays() {
     return production_days;
 }
 
+int Payload::getId() {
+    return id;
+}
+
 int Payload::next_id = 1;

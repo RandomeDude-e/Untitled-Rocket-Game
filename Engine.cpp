@@ -172,4 +172,8 @@ double Engine::calculateProductionDays() {
     return production_days;
 }
 
+int Engine::getId() {
+    return id;
+}
+
 int Engine::next_id = 1;

@@ -22,5 +22,6 @@ public:
     virtual void createPart() = 0;
     virtual double calculateCost() = 0;
     virtual double calculateProductionDays() = 0;
+    virtual int getId() = 0;
     virtual ~Part() = default;
 };
